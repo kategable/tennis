@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        [class*="col-"] {
+            float: left;
+            padding: 15px;
+        }
+
+        .col-1 {
+            width: 8.33%;
+        }
+
+        .col-2 {
+            width: 16.66%;
+        }
+
+        .col-3 {
+            width: 25%;
+        }
+
+        .col-4 {
+            width: 33.33%;
+        }
+
+        .col-5 {
+            width: 41.66%;
+        }
+
+        .col-6 {
+            width: 50%;
+        }
+
+        .col-7 {
+            width: 58.33%;
+        }
+
+        .col-8 {
+            width: 66.66%;
+        }
+
+        .col-9 {
+            width: 75%;
+        }
+
+        .col-10 {
+            width: 83.33%;
+        }
+
+        .col-11 {
+            width: 91.66%;
+        }
+
+        .col-12 {
+            width: 100%;
+        }
+
+        html {
+            font-family: "Lucida Sans", sans-serif;
+        }
+
+        .header {
+            background-color: #9933cc;
+            color: #ffffff;
+            padding: 15px;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu li {
+            padding: 8px;
+            margin-bottom: 7px;
+            background-color: #33b5e5;
+            color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+
+        .menu li:hover {
+            background-color: #0099cc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Tennis</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col-3 menu">
+            <ul>
+                <li>The Flight</li>
+                <li>The City</li>
+                <li>The Island</li>
+                <li>The Food</li>
+            </ul>
+        </div>
+
+        <div class="col-9">
+            <h1>The City</h1>
+        
+            <div style="height: 500px" class="col-9" id="map"></div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="js/tennis.js"></script>
+        
+        <script>
+            // Note: This example requires that you consent to location sharing when
+            // prompted by your browser. If you see the error "The Geolocation service
+            // failed.", it means you probably did not give permission for the browser to
+            // locate you.
+            var map, infoWindow;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: -34.397, lng: 150.644 },
+                    zoom: 15
+                });
+                infoWindow = new google.maps.InfoWindow;
+                // Try HTML5 geolocation.
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent('You are here.');
+                        infoWindow.open(map);
+                        map.setCenter(pos);
+                        var tennis= new tennisApi();
+                        tennis.load(pos);
+                    }, function () {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    });
+                } else {
+                    // Browser doesn't support Geolocation
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
+            }
+            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+                infoWindow.open(map);
+            }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfmgap2s_qXBK_sz9FvC5hMUIHuOM9aYo&callback=initMap">
+        </script>
+    </div>
+
+</body>
+
+</html>
