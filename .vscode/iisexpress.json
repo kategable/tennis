@@ -1,0 +1,6 @@
+{
+  "port": 1521,
+  "path": "c:\\github\\tennis",
+  "clr": "v4.0",
+  "protocol": "http"
+}
