@@ -3,7 +3,10 @@ function tennisApi() {
   var api = {};
   var apikey = "pw9km4p5mx6nx8jdxzd45h73";
   function load(pos) {
-    var url = "https://api.amp.active.com/v2/search/?lat_lon=42.34%2C-88.04&radius=50&current_page=1&per_page=10&sort=distance&topic=tennis&exclude_children=false&api_key=pw9km4p5mx6nx8jdxzd45h73";
+    var search ={"lat_lon":pos.lat+','+pos.lon,"current_page":"1","query":"Green Dot","start_date":"2017-12-05..2018-01-01"};
+
+    var myJSON = JSON.stringify(search);
+    var url = "http://localhost:3000/events/" + myJSON;
     //            http://api.amp.active.com/v2/search
     // $.ajax({
     //   url: url,
